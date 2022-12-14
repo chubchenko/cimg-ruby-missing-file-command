@@ -1,0 +1,38 @@
+version: 2.1
+
+executors:
+  ruby:
+    description: The official CircleCI Ruby Docker image
+    parameters:
+      tag:
+        description: The cimg/ruby Docker image version tag
+        type: string
+        default: "latest"
+    docker:
+      - image: cimg/ruby:<< parameters.tag >>
+    working_directory: ~/demo
+
+jobs:
+  ruby-3-1-2:
+    executor:
+      name: ruby
+      tag: "3.1.2"
+    steps:
+      - run: whereis file
+      - run: file --version
+
+
+  ruby-3-1-3:
+    executor:
+      name: ruby
+      tag: "3.1.3"
+    steps:
+      - run: whereis file
+      - run: file --version
+
+workflows:
+  version: 2
+  default:
+    jobs:
+      - ruby-3-1-2
+      - ruby-3-1-3
